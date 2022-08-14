@@ -2,12 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <meta charset="UTF-8">
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="">Hello Servlet</a>
+    <script type="text/javascript">
+        window.location.href = "user/toLogin.do";
+    </script>
 </body>
 </html>
