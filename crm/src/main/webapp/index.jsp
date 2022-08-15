@@ -6,7 +6,7 @@
 </head>
 <body>
     <script type="text/javascript">
-        window.location.href = "user/toLogin.do";
+        window.location.href = "user/toLogin";
     </script>
 </body>
 </html>
