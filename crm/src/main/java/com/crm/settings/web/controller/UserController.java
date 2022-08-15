@@ -31,7 +31,7 @@ public class UserController {
      * 首页跳转
      * @return
      */
-    @RequestMapping("/toLogin")
+    @RequestMapping("/toLogin.do")
     public String toLogin(){
         return "settings/qx/user/login";
     }
@@ -43,7 +43,7 @@ public class UserController {
      * @param req
      * @return
      */
-    @RequestMapping("/login")
+    @RequestMapping("/login.do")
     @ResponseBody
     public Object login(String loginAct, String loginPwd, String isRemPwd,
                         HttpServletRequest req, HttpSession session,
@@ -91,7 +91,7 @@ public class UserController {
         return msg;
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping("/logout.do")
     public String logout(HttpServletRequest req, HttpSession session,
                          HttpServletResponse response){
 

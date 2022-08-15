@@ -210,7 +210,7 @@
 		//给“确定”按钮添加单击事件
 		$("#logoutBtn").click(function () {
 			//发送同步请求
-			window.location.href="user/logout";
+			window.location.href="user/logout.do";
 		});
 
 	});
