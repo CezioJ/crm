@@ -7,6 +7,7 @@
 <html>
 <head>
 	<base href="<%=basePath%>">
+	<title>登录</title>
 <meta charset="UTF-8">
 <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 

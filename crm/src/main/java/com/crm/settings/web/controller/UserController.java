@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    @RequestMapping("toLogin.do")
+
+    @RequestMapping("/toLogin.do")
     public String toLogin(){
         return "settings/qx/user/login";
     }
+
+//    @RequestMapping("/login")
+//    public Boolean login(){
+//
+//    }
 }
