@@ -25,6 +25,7 @@ http://www.springframework.org/schema/context/spring-context.xsd http://www.spri
             <tx:method name="*search*" read-only="true"/>
             <tx:method name="*add*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="*save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="*insert*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="*edit*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="*update*" propagation="REQUIRED" rollback-for="Exception"/>
             <tx:method name="*delete*" propagation="REQUIRED" rollback-for="Exception"/>

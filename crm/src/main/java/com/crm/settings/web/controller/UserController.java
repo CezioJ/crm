@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.DispatcherServlet;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,7 +52,7 @@ public class UserController {
 
         User user = userService.login(map);
         ReturnMsg msg = new ReturnMsg();
-        msg.setStatus(Constants.LOGIN_FAIL);
+        msg.setStatus(Constants.STATUS_FAIL);
         if(user == null){
             msg.setMessage("用户名或密码错误");
         }else {
@@ -65,7 +63,7 @@ public class UserController {
             }else if (DateUtils.formatDateTime(new Date()).compareTo(user.getExpireTime())>0){
                 msg.setMessage("账号过期");
             }else {
-                msg.setStatus(Constants.LOGIN_SUCCESS);
+                msg.setStatus(Constants.STATUS_SUCCESS);
                 session.setAttribute(Constants.SESSION_KEY,user);
 
                 //如果需要记住密码，则往外写cookie
@@ -91,6 +89,13 @@ public class UserController {
         return msg;
     }
 
+    /**
+     * 用户退出
+     * @param req
+     * @param session
+     * @param response
+     * @return 返回首页
+     */
     @RequestMapping("/logout.do")
     public String logout(HttpServletRequest req, HttpSession session,
                          HttpServletResponse response){
