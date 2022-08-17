@@ -8,6 +8,7 @@
 <html>
 <head>
 	<base href="<%=basePath%>">
+	<title>个人中心</title>
 <meta charset="UTF-8">
 <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>

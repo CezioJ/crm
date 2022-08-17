@@ -97,7 +97,7 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 					<h4 class="modal-title" id="myModalLabel2">修改市场活动</h4>
 				</div>
 				<div class="modal-body">
-
+					<input type="hidden" id="edit-id">
 					<form class="form-horizontal" role="form">
 
 						<div class="form-group">
@@ -134,9 +134,9 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 						</div>
 
 						<div class="form-group">
-							<label for="edit-describe" class="col-sm-2 control-label">描述</label>
+							<label for="edit-description" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="edit-describe">市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等</textarea>
+								<textarea class="form-control" rows="3" id="edit-description">市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等</textarea>
 							</div>
 						</div>
 
@@ -145,7 +145,7 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
+					<button type="button" class="btn btn-primary" id="saveEditActivityBtn">更新</button>
 				</div>
 			</div>
 		</div>
@@ -206,14 +206,14 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="query-name">
 				    </div>
 				  </div>
 
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="query-owner">
 				    </div>
 				  </div>
 
@@ -221,25 +221,25 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">开始日期</div>
-					  <input class="form-control" type="text" id="startTime" />
+					  <input class="form-control date" type="text" id="query-startDate" readonly/>
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">结束日期</div>
-					  <input class="form-control" type="text" id="endTime">
+					  <input class="form-control date" type="text" id="query-endDate" readonly/>
 				    </div>
 				  </div>
 
-				  <button type="submit" class="btn btn-default">查询</button>
+				  <button type="button" class="btn btn-default" id="queryActivityBtn">查询</button>
 
 				</form>
 			</div>
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" id="createActivityBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				  <button type="button" class="btn btn-default" id="editActivityBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+				  <button type="button" class="btn btn-danger" id="deleteActivityBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				<div class="btn-group" style="position: relative; top: 18%;">
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#importActivityModal" ><span class="glyphicon glyphicon-import"></span> 上传列表数据（导入）</button>
@@ -251,65 +251,16 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 				<table class="table table-hover">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
+							<td><input type="checkbox" id="checkAll" /></td>
 							<td>名称</td>
                             <td>所有者</td>
 							<td>开始日期</td>
 							<td>结束日期</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr class="active">
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">发传单</a></td>
-                            <td>zhangsan</td>
-							<td>2020-10-10</td>
-							<td>2020-10-20</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">发传单</a></td>
-                            <td>zhangsan</td>
-                            <td>2020-10-10</td>
-                            <td>2020-10-20</td>
-                        </tr>
-					</tbody>
+					<tbody id="tBody"></tbody>
 				</table>
-			</div>
-
-			<div style="height: 50px; position: relative;top: 30px;">
-				<div>
-					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-				</div>
-				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							10
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">20</a></li>
-							<li><a href="#">30</a></li>
-						</ul>
-					</div>
-					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-				</div>
-				<div style="position: relative;top: -88px; left: 285px;">
-					<nav>
-						<ul class="pagination">
-							<li class="disabled"><a href="#">首页</a></li>
-							<li class="disabled"><a href="#">上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li class="disabled"><a href="#">末页</a></li>
-						</ul>
-					</nav>
-				</div>
+				<div id="page"></div>
 			</div>
 
 		</div>
@@ -378,7 +329,7 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 						//关闭模态窗口
 						$("#createActivityModal").modal("hide");
 						//刷新市场活动列，显示第一页数据，保持每页显示条数不变
-						//queryActivityByConditionForPage(1,$("#demo_pag1").bs_pagination('getOption', 'rowsPerPage'));
+						queryActivityByConditionForPage(1,$("#page").bs_pagination('getOption', 'rowsPerPage'));
 					}else{
 						//提示信息
 						alert(data.message);
@@ -414,6 +365,230 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 			todayBtn:true,//设置是否显示"今天"按钮,默认是false
 			clearBtn:true//设置是否显示"清空"按钮，默认是false
 		});
+		//当市场活动主页面加载完成，查询所有数据的第一页以及所有数据的总条数,默认每页显示10条
+		queryActivityByConditionForPage(1,10);
+
+		//给"查询"按钮添加单击事件
+		$("#queryActivityBtn").click(function () {
+			//查询所有符合条件数据的第一页以及所有符合条件数据的总条数;
+			queryActivityByConditionForPage(1,$("#page").bs_pagination('getOption', 'rowsPerPage'));
+		});
+
+		//给"全选"按钮添加单击事件
+		$("#checkAll").click(function () {
+			//如果"全选"按钮是选中状态，则列表中所有checkbox都选中
+			$("#tBody input[type='checkbox']").prop("checked",this.checked);
+		});
+
+		$("#tBody").on("click","input[type='checkbox']",function () {
+			//如果列表中的所有checkbox都选中，则"全选"按钮也选中
+			let allChecked = $("#tBody input[type='checkbox']").size()==$("#tBody input[type='checkbox']:checked").size();
+			$("#checkAll").prop("checked", allChecked);
+		});
+
+		//给"删除"按钮添加单击事件
+		$("#deleteActivityBtn").click(function () {
+			//收集参数
+			//获取列表中所有被选中的checkbox
+			let checkedIds=$("#tBody input[type='checkbox']:checked");
+			if(checkedIds.size()==0){
+				alert("请选择要删除的市场活动");
+				return;
+			}
+
+			if(window.confirm("确定删除吗？")){
+				let ids="";
+				$.each(checkedIds,function () {//id=xxx&id=xxx&.....&id=xxx&
+					ids+="id="+this.value+"&";
+				});
+				ids=ids.substr(0,ids.length-1);//id=xxx&id=xxx&.....&id=xxx
+
+				//发送请求
+				$.ajax({
+					url:'workbench/activity/deleteActivityByIds.do',
+					data:ids,
+					type:'post',
+					dataType:'json',
+					success:function (data) {
+						if(data.status == "1"){
+							//刷新市场活动列表,显示第一页数据,保持每页显示条数不变
+							queryActivityByConditionForPage(1,$("#page").bs_pagination('getOption', 'rowsPerPage'));
+						}else{
+							//提示信息
+							alert(data.message);
+						}
+					}
+				});
+			}
+		});
+
+		//给"修改"按钮添加单击事件
+		$("#editActivityBtn").click(function () {
+			//收集参数
+			//获取列表中被选中的checkbox
+			let checkedIds=$("#tBody input[type='checkbox']:checked");
+			if(checkedIds.size()==0){
+				alert("请选择要修改的市场活动");
+				return;
+			}
+			if(checkedIds.size()>1){
+				alert("每次只能修改一条市场活动");
+				return;
+			}
+			let id=checkedIds.val();
+			//发送请求
+			$.ajax({
+				url:'workbench/activity/queryActivityById.do',
+				data:{
+					id:id
+				},
+				type:'post',
+				dataType:'json',
+				success:function (data) {
+					//把市场活动的信息显示在修改的模态窗口上
+					$("#edit-id").val(data.id);
+					$("#edit-marketActivityOwner").val(data.owner);
+					$("#edit-marketActivityName").val(data.name);
+					$("#edit-startTime").val(data.startDate);
+					$("#edit-endTime").val(data.endDate);
+					$("#edit-cost").val(data.cost);
+					$("#edit-description").val(data.description);
+					//弹出模态窗口
+					$("#editActivityModal").modal("show");
+				}
+			});
+		});
+
+		//给"更新"按钮添加单击事件
+		$("#saveEditActivityBtn").click(function () {
+			//收集参数
+			let id=$("#edit-id").val();
+			let owner=$("#edit-marketActivityOwner").val();
+			let name=$.trim($("#edit-marketActivityName").val());
+			let startDate=$("#edit-startTime").val();
+			let endDate=$("#edit-endTime").val();
+			let cost=$.trim($("#edit-cost").val());
+			let description=$.trim($("#edit-description").val());
+			//表单验证
+			if(owner==""){
+				alert("所有者不能为空");
+				return;
+			}
+			if(name==""){
+				alert("名称不能为空");
+				return;
+			}
+			if(startDate!=""&&endDate!=""){
+				//使用字符串的大小代替日期的大小
+				if(endDate<startDate){
+					alert("结束日期不能比开始日期小");
+					return;
+				}
+			}
+
+			let regExp=/^(([1-9]\d*)|0)$/;
+			if(!regExp.test(cost)){
+				alert("成本只能为非负整数");
+				return;
+			}
+			//发送请求
+			$.ajax({
+				url:'workbench/activity/saveEditActivity.do',
+				data:{
+					id:id,
+					owner:owner,
+					name:name,
+					startDate:startDate,
+					endDate:endDate,
+					cost:cost,
+					description:description
+				},
+				type:'post',
+				dataType:'json',
+				success:function (data) {
+					if(data.status == "1"){
+						//关闭模态窗口
+						$("#editActivityModal").modal("hide");
+						//刷新市场活动列表,保持页号和每页显示条数都不变
+						queryActivityByConditionForPage($("#page").bs_pagination('getOption', 'currentPage'),$("#page").bs_pagination('getOption', 'rowsPerPage'));
+					}else{
+						//提示信息
+						alert(data.message);
+						//模态窗口不关闭
+						$("#editActivityModal").modal("show");
+					}
+				}
+			});
+		});
+
+
+
+		function queryActivityByConditionForPage(pageNo,pageSize) {
+			//收集参数
+			let name = $("#query-name").val();
+			let owner = $("#query-owner").val();
+			let startDate = $("#query-startDate").val();
+			let endDate = $("#query-endDate").val();
+			//发送请求
+			$.ajax({
+				url: 'workbench/activity/queryActivityByConditionForPage.do',
+				data: {
+					name: name,
+					owner: owner,
+					startDate: startDate,
+					endDate: endDate,
+					pageNo: pageNo,
+					pageSize: pageSize
+				},
+				type: 'post',
+				dataType: 'json',
+				success: function (data) {
+					//显示市场活动的列表
+					//遍历activityList，拼接所有行数据
+					let htmlStr = "";
+					$.each(data.activityList, function (index, obj) {
+						htmlStr += "<tr class=\"active\">";
+						htmlStr += "<td><input type=\"checkbox\" value=\"" + obj.id + "\"/></td>";
+						htmlStr += "<td><a style=\"text-decoration: none; cursor: pointer;\" onclick=\"window.location.href='workbench/activity/detailActivity.do?id=" + obj.id + "'\">" + obj.name + "</a></td>";
+						htmlStr += "<td>" + obj.owner + "</td>";
+						htmlStr += "<td>" + obj.startDate + "</td>";
+						htmlStr += "<td>" + obj.endDate + "</td>";
+						htmlStr += "</tr>";
+					});
+					$("#tBody").html(htmlStr);
+					//取消"全选"按钮
+					$("#checkAll").prop("checked", false);
+
+					//计算总页数
+					let totalPages = 1;
+					if(data.totalRows%pageSize==0){
+						totalPages=data.totalRows/pageSize;
+					}else{
+						totalPages=parseInt(data.totalRows/pageSize)+1;
+					}
+
+					//对容器调用bs_pagination工具函数，显示翻页信息
+					$("#page").bs_pagination({
+						currentPage:pageNo,//当前页号,相当于pageNo
+						rowsPerPage:pageSize,//每页显示条数,相当于pageSize
+						totalRows:data.totalRows,//总条数
+						totalPages:totalPages,  //总页数,必填参数.
+						visiblePageLinks:5,//最多可以显示的卡片数
+						showGoToPage:true,//是否显示"跳转到"部分,默认true--显示
+						showRowsPerPage:true,//是否显示"每页显示条数"部分。默认true--显示
+						showRowsInfo:true,//是否显示记录的信息，默认true--显示
+
+						//用户每次切换页号，都自动触发本函数;
+						//每次返回切换页号之后的pageNo和pageSize
+						onChangePage: function(event,pageObj) {
+							queryActivityByConditionForPage(pageObj.currentPage,pageObj.rowsPerPage);
+						}
+					});
+
+				}
+			});
+		}
+
 
 	});
 
