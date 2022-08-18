@@ -244,7 +244,7 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 				<div class="btn-group" style="position: relative; top: 18%;">
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#importActivityModal" ><span class="glyphicon glyphicon-import"></span> 上传列表数据（导入）</button>
                     <button id="exportActivityAllBtn" type="button" class="btn btn-default"><span class="glyphicon glyphicon-export"></span> 下载列表数据（批量导出）</button>
-                    <button id="exportActivityXzBtn" type="button" class="btn btn-default"><span class="glyphicon glyphicon-export"></span> 下载列表数据（选择导出）</button>
+                    <button id="exportActivityByConditionBtn" type="button" class="btn btn-default"><span class="glyphicon glyphicon-export"></span> 下载列表数据（选择导出）</button>
                 </div>
 			</div>
 			<div style="position: relative;top: 10px;">
@@ -521,7 +521,72 @@ String basePath = request.getScheme() + "://"+ request.getServerName()
 			});
 		});
 
+		//给"批量导出"按钮添加单击事件
+		$("#exportActivityAllBtn").click(function () {
+			//发送同步请求
+			window.location.href="workbench/activity/exportAllActivity.do";
+		});
 
+		//给"选择导出"按钮添加单击事件
+		$("#exportActivityByConditionBtn").click(function (){
+			//发送同步请求
+			let checkedIds = $("#tBody input[type='checkbox']:checked");
+			if(checkedIds.size() < 1){
+				alert("请至少选中一项");
+				return;
+			}
+			let ids = '';
+			$.each(checkedIds,function (){
+				ids+="id="+this.value+"&";
+			})
+			ids = ids.substr(0,ids.length-1);
+			window.location.href="workbench/activity/exportActivityByCondition.do?"+ids;
+		})
+
+		//给"导入"按钮添加单击事件
+		$("#importActivityBtn").click(function () {
+			//收集参数
+			let activityFileName = $("#activityFile").val();
+			let suffix = activityFileName.substr(activityFileName.lastIndexOf(".") + 1).toLocaleLowerCase();//xls,XLS,Xls,xLs,....
+			if (suffix != "xls") {
+				alert("只支持xls文件");
+				return;
+			}
+			let activityFile = $("#activityFile")[0].files[0];
+			if (activityFile.size > 5 * 1024 * 1024) {
+				alert("文件大小不超过5MB");
+				return;
+			}
+
+			//FormData是ajax提供的接口,可以模拟键值对向后台提交参数;
+			//FormData最大的优势是不但能提交文本数据，还能提交二进制数据
+			let formData = new FormData();
+			formData.append("activityFile", activityFile);
+			formData.append("userName", "张三");
+
+			//发送请求
+			$.ajax({
+				url: 'workbench/activity/importActivity.do',
+				data: formData,
+				processData: false,//设置ajax向后台提交参数之前，是否把参数统一转换成字符串：true--是,false--不是,默认是true
+				contentType: false,//设置ajax向后台提交参数之前，是否把所有的参数统一按urlencoded编码：true--是,false--不是，默认是true
+				type: 'post',
+				dataType: 'json',
+				success: function (data) {
+					//显示反馈信息
+					alert(data.message);
+					if (data.status == "1") {
+						//关闭模态窗口
+						$("#importActivityModal").modal("hide");
+						//刷新市场活动列表,显示第一页数据,保持每页显示条数不变
+						queryActivityByConditionForPage(1, $("#page").bs_pagination('getOption', 'rowsPerPage'));
+					} else {
+						//模态窗口不关闭
+						$("#importActivityModal").modal("show");
+					}
+				}
+			});
+		});
 
 		function queryActivityByConditionForPage(pageNo,pageSize) {
 			//收集参数

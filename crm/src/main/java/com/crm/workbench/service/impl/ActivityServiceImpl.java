@@ -9,7 +9,6 @@ import com.crm.workbench.mapper.ActivityMapper;
 import com.crm.workbench.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +49,16 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    public List<Activity> queryActivityByIds(String[] ids) {
+        return activityMapper.selectActivityByIds(ids);
+    }
+
+    @Override
+    public List<Activity> queryAllActivity() {
+        return activityMapper.selectAllActivity();
+    }
+
+    @Override
     public int queryCountOfActivityByCondition(Map<String,Object> map) {
         return activityMapper.selectCountOfActivityByCondition(map);
     }
@@ -72,12 +81,26 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public Object detailActivityById(String id) {
+    public Object importActivityList(List<Activity> activityList) {
+        ReturnMsg msg = new ReturnMsg();
+        msg.setStatus(Constants.STATUS_FAIL);
+        if(activityMapper.insertActivityList(activityList) == activityList.size()){
+            msg.setStatus(Constants.STATUS_SUCCESS);
+            msg.setMessage("成功导入"+activityList.size()+"条数据");
+        } else {
+            msg.setStatus(Constants.STATUS_SUCCESS);
+            msg.setMessage("系统繁忙。。。");
+        }
+        return msg;
+    }
+
+    @Override
+    public Activity queryActivityById(String id) {
         return activityMapper.selectActivityById(id);
     }
 
     @Override
-    public Object queryActivityById(String id) {
+    public Activity queryActivityForDetailById(String id) {
         return activityMapper.selectActivityById(id);
     }
 
