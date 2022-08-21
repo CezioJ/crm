@@ -37,7 +37,7 @@ public class ActivityController {
 
     @RequestMapping("/workbench/activity/index.do")
     public String index(HttpServletRequest req){
-        List<User> userList = userService.selectAllUsers();
+        List<User> userList = userService.queryAllUsers();
         req.setAttribute("userList",userList);
         return "workbench/activity/index";
     }
@@ -50,6 +50,12 @@ public class ActivityController {
         activity.setCreateBy(user.getId());
 
         return activityService.saveActivity(activity);
+    }
+
+    @RequestMapping("/workbench/activity/queryAllActivityForDetail.do")
+    @ResponseBody
+    public Object queryAllActivity(){
+        return activityService.queryAllActivityForDetail();
     }
 
     @RequestMapping("/workbench/activity/queryActivityByConditionForPage.do")
@@ -84,7 +90,7 @@ public class ActivityController {
     @RequestMapping("/workbench/activity/detailActivity.do")
     public String detailActivity(String id, HttpServletRequest request){
         //调用service层方法，查询数据
-        Activity activity = (Activity) activityService.queryActivityById(id);
+        Activity activity = (Activity) activityService.queryActivityForDetailById(id);
         List<ActivityRemark> remarkList = activityRemarkService.queryActivityRemarkForDetailByActivityId(id);
         //把数据保存到request中
         request.setAttribute("activity",activity);
@@ -116,7 +122,7 @@ public class ActivityController {
         OutputStream out = response.getOutputStream();
 
         //调用service层方法，查询所有的市场活动
-        List<Activity> activityList = activityService.queryAllActivity();
+        List<Activity> activityList = activityService.queryAllActivityForDetail();
         //创建excel文件，并且把activityList写入到excel文件中
         HSSFWorkbook wb = HSSFUtils.creatActivityExcel(activityList);
         wb.write(out);

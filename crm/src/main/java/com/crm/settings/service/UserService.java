@@ -7,5 +7,6 @@ import java.util.Map;
 
 public interface UserService {
     User login(Map<String,Object> map);
-    List<User> selectAllUsers();
+    List<User> queryAllUsers();
+
 }

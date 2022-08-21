@@ -10,6 +10,7 @@ import com.crm.workbench.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +45,21 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    public List<Activity> queryActivityForDetailByNameClueId(String activityName, String clueId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("activityName",activityName);
+        map.put("clueId",clueId);
+        return activityMapper.selectActivityForDetailByNameClueId(map);
+    }
+
+    @Override
     public List<Activity> queryActivityByConditionForPage(Map<String,Object> map) {
         return activityMapper.selectActivityByConditionForPage(map);
+    }
+
+    @Override
+    public List<Activity> queryActivityForDetailByClueId(String id) {
+        return activityMapper.selectActivityForDetailByClueId(id);
     }
 
     @Override
@@ -54,8 +68,13 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public List<Activity> queryAllActivity() {
-        return activityMapper.selectAllActivity();
+    public List<Activity> queryAllActivityForDetail() {
+        return activityMapper.selectAllActivityForDetail();
+    }
+
+    @Override
+    public List<Activity> queryActivityForConvertByNameClueId(Map<String, Object> map) {
+        return activityMapper.selectActivityForConvertByNameClueId(map);
     }
 
     @Override
@@ -101,7 +120,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity queryActivityForDetailById(String id) {
-        return activityMapper.selectActivityById(id);
+        return activityMapper.selectActivityForDetailById(id);
     }
 
     @Override

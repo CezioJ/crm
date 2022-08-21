@@ -56,11 +56,15 @@ public interface ActivityMapper {
 
     List<Activity> selectActivityByConditionForPage(Map<String,Object> map);
     List<Activity> selectActivityByIds(String[] ids);
-    List<Activity> selectAllActivity();
+    List<Activity> selectAllActivityForDetail();
     int selectCountOfActivityByCondition(Map<String,Object> map);
     int deleteActivityByIds(String[] ids);
     int updateActivity(Activity ac);
     int insertActivityList(List<Activity> activityList);
     Activity selectActivityById(String id);
     Activity selectActivityForDetailById(String id);
+    List<Activity> selectActivityForConvertByNameClueId(Map<String,Object> map);
+    List<Activity> selectActivityForDetailByIds(String[] id);
+    List<Activity> selectActivityForDetailByClueId(String clueId);
+    List<Activity> selectActivityForDetailByNameClueId(Map<String,Object> map);
 }
